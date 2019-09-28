@@ -3,14 +3,16 @@ const router = Router();
 
 const User = require('../models/user');
 
-router.post('/signup', (req, res, next) => {
+router.post('/signup', async (req, res, next) => {
     const { username, email, password } = req.body;
     const user = new User({
         username: username,
         email: email,
         password: password
-    })
-    console.log(user)
+    });
+    user.password = await user.encryptPassword(user.password);
+    await user.save();
+    
     res.json({message: 'Received'})
 }) 
 
