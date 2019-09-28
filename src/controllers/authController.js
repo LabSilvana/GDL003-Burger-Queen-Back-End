@@ -11,6 +11,7 @@ router.post('/signup', async (req, res, next) => {
         password: password
     })
    user.password = await user.encryptPassword(user.password)
+   await user.save();
    console.log(user);
    
     res.json({message: 'Received'})
