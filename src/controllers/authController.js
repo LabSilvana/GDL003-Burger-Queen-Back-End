@@ -3,6 +3,7 @@ const router = Router();
 const User = require('../models/user');
 const jwt = require (`jsonwebtoken`);
 const config= require(`../config`);
+
 router.post('/signup', async (req, res, next) => {
     const { username, email, password } = req.body;
     const user = new User({
