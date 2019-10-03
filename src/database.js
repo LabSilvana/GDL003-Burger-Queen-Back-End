@@ -5,4 +5,5 @@ mongoose.connect('mongodb+srv://churro-latte:1qa2ws3ed@cluster0-ardbn.mongodb.ne
     useNewUrlParser: true,
     useUnifiedTopology: true  
 }).then(db => console.log('Database is connected'))
+    
 
