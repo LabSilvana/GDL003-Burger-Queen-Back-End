@@ -23,16 +23,18 @@ router.post('/products', (req, res) => {
 
 
 router.put(`/products/:productid`, async(req, res)=>{
-  Product.updateOne({name: req.body.name}, {$set:{price: req.body.price}},function(err,product) {
-    
-    if(err){
-      console.log("Something wrong when updating data!");
-    }
-    console.log(product);
-    
-    return res.send("cambiado")
-  ;
-  });
+  //console.log( Product.updateOne({name: req.body.name}, {$set:{price: req.body.price}},{upsert :  true}));
+ 
+  Product.findOne({name: req.body.name}, function (err,docs) {
+    console.log(docs);
+    Product.updateOne({name: req.body.name}, {$set:{price: req.body.price}},function(err,document) {
+      if(err){
+        console.log("Something wrong when updating data!", err);
+        }
+        return res.send("changed")
+    })   
+    return res.send("product don´t exist");
+  });  
 });
   
       
