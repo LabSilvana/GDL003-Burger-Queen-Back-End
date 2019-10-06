@@ -26,6 +26,7 @@ router.put(`/products/:productid`, async(req, res)=>{
   //console.log( Product.updateOne({name: req.body.name}, {$set:{price: req.body.price}},{upsert :  true}));
  
   Product.findOne({name: req.body.name}, function (err,docs) {
+
     console.log(docs);
     Product.updateOne({name: req.body.name}, {$set:{price: req.body.price}},function(err,document) {
       if(err){
@@ -33,7 +34,6 @@ router.put(`/products/:productid`, async(req, res)=>{
         }
         return res.send("changed")
     })   
-    return res.send("product don´t exist");
   });  
 });
   
