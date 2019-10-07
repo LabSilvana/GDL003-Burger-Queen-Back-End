@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const JSON = require('circular-json');
-
 const Product = require('../models/product');
+
 
 router.get('/products', (req, res) => {
     Product.find((err, products) => {
@@ -14,13 +14,14 @@ router.get('/products', (req, res) => {
 });
 
 router.post('/products', (req, res) => {
-  const { name, price } = req.body;
+  const { name, price, img } = req.body;
   if(typeof name != 'string' || typeof price != 'number') return res.status(400).json({success: false, error: 'Bad Request'});
-  Product.create({ name, price },(err, product) => {
+  Product.create({ name, price, img },(err, product) => {
     if (err) return console.log(err);
     res.send('Saved');
   }); 
 });
+
 
 router.put('/products/:productId',(req, res) => {
     // Validate Request
@@ -52,8 +53,8 @@ router.put('/products/:productId',(req, res) => {
             message: "Error updating product with id " + req.params.productId
         });
     });
-});
-
+}); 
+     
 router.delete('/products/:productId', (req, res) => {
   Product.findByIdAndRemove(req.params.productId)
   .then(product => {
@@ -74,5 +75,6 @@ router.delete('/products/:productId', (req, res) => {
       });
   });
 });
+
 
 module.exports = router;

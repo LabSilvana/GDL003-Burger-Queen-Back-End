@@ -24,7 +24,7 @@ router.post('/signin', (req, res, next) => {
     res.json('signin');
 })
 
-router.get('/me', async (req, res, next) => {
+router.get('/createToken', async (req, res, next) => {
     const token =req.headers[`token`];
     if(!token){
         return res.status(401).json({
