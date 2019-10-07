@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose');
-
 const bcrypt = require('bcryptjs');
 
 
@@ -17,4 +16,4 @@ userSchema.methods.encryptPassword = async (password) => {
 };
 
 
-module.exports = model('user', userSchema);
+module.exports = model('users', userSchema);
