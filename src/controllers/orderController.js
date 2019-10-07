@@ -18,17 +18,35 @@ router.post('/orders', (req, res) => {
   });
  });
 
- router.delete('/orders/:ordersId', (req, res)=>{
-   Order.findByIdAndRemove(req.params.ordersId)
+router.delete('/orders/:ordersId', (req, res)=>{
+  Order.findByIdAndRemove(req.params.ordersId)
   .then(orders=> {
     if(!orders) {
-        return res.status(404).send({
-            message: "Order not found with id " + req.params.ordersId 
-        });
-      }
-      res.send({message: "Order delete successfully!"});
-    }); 
+      return res.status(404).send({
+        message: "Order not found with id " + req.params.ordersId 
+      })
+    }
+    res.send(note);
+   })
+  })
+
+ router.put('/orders/:ordersId', (req, res)=>{
+   Order.findByIdAndUpdate(req.params.ordersId,{
+    product: req.body.product,
+    quantity: req.body.quantity
+   },{new:true})
+   .then (orders=>{
+     if(!orders){
+      return res.status(404).send({
+        message: "Note not found with id " + req.params.noteId
+      });
+     }
+     res.send(orders);
+     
+   })
+  
  });
+
 
 
 module.exports = router;
