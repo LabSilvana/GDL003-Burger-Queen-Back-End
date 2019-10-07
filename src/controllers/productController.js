@@ -8,10 +8,8 @@ router.get('/products', (req, res) => {
     Product.find((err, products) => {
         if (err) return console.error(err); 
         res.send(JSON.stringify(products));
-        console.log(products);
-      });
-      
-});
+      }); 
+  });
 
 router.post('/products', (req, res) => {
   const { name, price, img } = req.body;
@@ -54,6 +52,7 @@ router.put('/products/:productId',(req, res) => {
         });
     });
 }); 
+
      
 router.delete('/products/:productId', (req, res) => {
   Product.findByIdAndRemove(req.params.productId)
