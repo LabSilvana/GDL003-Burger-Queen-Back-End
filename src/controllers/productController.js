@@ -5,11 +5,11 @@ const Product = require('../models/product');
 
 
 router.get('/products', (req, res) => {
-    const products = Product.find((err, products) => {
+    Product.find((err, products) => {
         if (err) return console.error(err); 
         res.send(JSON.stringify(products));
       }); 
-});
+  });
 
 router.post('/products', (req, res) => {
  const { name, price } = req.body;
@@ -21,9 +21,7 @@ router.post('/products', (req, res) => {
 });
 
 
-router.put(`/products/:productid`, async(req, res)=>{
-  //console.log( Product.updateOne({name: req.body.name}, {$set:{price: req.body.price}},{upsert :  true}));
- 
+router.put(`/products/:productid`, async(req, res)=>{ 
   Product.findOne({name: req.body.name}, function (err,docs) {
     console.log(docs);
     Product.updateOne({name: req.body.name}, {$set:{price: req.body.price}},function(err,document) {
@@ -35,9 +33,27 @@ router.put(`/products/:productid`, async(req, res)=>{
   });  
 });
   
-      
+     
+router.delete('/products/:productId', (req, res) => {
+  Product.findByIdAndRemove(req.params.productId)
+  .then(product => {
+      if(!product) {
+          return res.status(404).send({
+              message: "Product not found with id " + req.params.productId
+          });
+      }
+      res.send({message: "Product deleted successfully!"});
+  }).catch(err => {
+      if(err.name === 'ObjectId' || err.price === 'NotFound') {
+          return res.status(404).send({
+              message: "Product not found with id " + req.params.productId
+          });                
+      }
+      return res.status(500).send({
+          message: "Could not delete Product with id " + req.params.productId
+      });
+  });
+});
 
-
-    
 
 module.exports = router;
