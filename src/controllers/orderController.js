@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const JSON = require('circular-json');
-const Order = require('../models/Order');
+const Order = require('../models/order');
 
 router.get('/orders', (req, res) => {
   const orders = Order.find((err, orders) => {
