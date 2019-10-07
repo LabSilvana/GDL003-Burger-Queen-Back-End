@@ -8,8 +8,7 @@ router.get('/products', (req, res) => {
     const products = Product.find((err, products) => {
         if (err) return console.error(err); 
         res.send(JSON.stringify(products));
-      });
-      
+      }); 
 });
 
 router.post('/products', (req, res) => {
@@ -26,7 +25,6 @@ router.put(`/products/:productid`, async(req, res)=>{
   //console.log( Product.updateOne({name: req.body.name}, {$set:{price: req.body.price}},{upsert :  true}));
  
   Product.findOne({name: req.body.name}, function (err,docs) {
-
     console.log(docs);
     Product.updateOne({name: req.body.name}, {$set:{price: req.body.price}},function(err,document) {
       if(err){
