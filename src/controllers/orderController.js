@@ -42,11 +42,6 @@ router.delete('/orders/:ordersId', (req, res)=>{
       });
      }
      res.send(orders);
-     
    })
-  
  });
-
-
-
 module.exports = router;
