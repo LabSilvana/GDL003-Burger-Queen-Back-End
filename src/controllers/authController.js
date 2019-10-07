@@ -4,7 +4,8 @@ const User = require('../models/user');
 const jwt = require (`jsonwebtoken`);
 const config= require(`../config`);
 
-router.post('/signup', async (req, res, next) => {
+
+router.post('/signup', async (req, res) => {
     const { username, email, password } = req.body;
     const user = new User({
         username: username,
@@ -20,11 +21,8 @@ router.post('/signup', async (req, res, next) => {
     res.json({auth:true, token})
 }) 
 
-router.post('/signin', (req, res, next) => {
-    res.json('signin');
-})
 
-router.get('/createToken', async (req, res, next) => {
+router.get('/loginToken', async (req, res) => {
     const token =req.headers[`token`];
     if(!token){
         return res.status(401).json({
