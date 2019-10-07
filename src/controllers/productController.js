@@ -8,10 +8,8 @@ router.get('/products', (req, res) => {
     Product.find((err, products) => {
         if (err) return console.error(err); 
         res.send(JSON.stringify(products));
-        console.log(products);
-      });
-      
-});
+      }); 
+  });
 
 router.post('/products', (req, res) => {
  const { name, price } = req.body;
@@ -32,7 +30,6 @@ router.put(`/products/:productid`, async(req, res)=>{
         }
         return res.send("changed")
     })   
-    return res.send("product don´t exist");
   });  
 });
   
