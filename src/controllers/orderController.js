@@ -10,4 +10,25 @@ router.get('/orders', (req, res) => {
   });
 });
 
+router.post('/orders', (req, res) => {
+  const { product, quantity } = req.body;
+   Order.create({ product, quantity },(err, orders) => {
+    if (err) return console.log(err);
+    res.send('Saved');
+  });
+ });
+
+ router.delete('/orders/:ordersid', (req, res)=>{
+  Order.findByIdAndRemove(req.params.ordersid)
+  .then(orders=> {
+    if(!orders) {
+        return res.status(404).send({
+            message: "Note not found with id " + req.params.ordersid
+        });
+      }
+      res.send({message: "Note deleted successfully!"});
+    });
+ });
+
+
 module.exports = router;
