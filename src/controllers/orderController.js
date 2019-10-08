@@ -11,8 +11,8 @@ router.get('/orders', (req, res) => {
 });
 
 router.post('/orders', (req, res) => {
-  const { product, quantity } = req.body;
-   Order.create({ product, quantity },(err, orders) => {
+  const { name, comanda } = req.body;
+   Order.create({ name, comanda },(err, orders) => {
     if (err) return console.log(err);
     res.send('Saved');
   });
@@ -32,8 +32,8 @@ router.delete('/orders/:ordersId', (req, res)=>{
 
  router.put('/orders/:ordersId', (req, res)=>{
    Order.findByIdAndUpdate(req.params.ordersId,{
-    product: req.body.product,
-    quantity: req.body.quantity
+    name: req.body.name,
+    comanda: req.body.comanda
    },{new:true})
    .then (orders=>{
      if(!orders){
