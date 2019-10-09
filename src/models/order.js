@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const orderSchema = new Schema({
     name: String,
-    comanda: {}
+    comanda: Array
 });
 
 const Order = model('Order', orderSchema);

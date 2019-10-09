@@ -12,11 +12,12 @@ router.get('/orders', (req, res) => {
 
 router.post('/orders', (req, res) => {
   const { name, comanda } = req.body;
-   Order.create({ name, comanda },(err, orders) => {
+  if(typeof name != 'string' || typeof comanda != 'object') return res.status(400).json({success: false, error: 'Bad Request'});
+  Order.create({ name, comanda },(err, order) => {
     if (err) return console.log(err);
     res.send('Saved');
   });
- });
+});
 
 router.delete('/orders/:ordersId', (req, res)=>{
   Order.findByIdAndRemove(req.params.ordersId)
@@ -44,4 +45,5 @@ router.delete('/orders/:ordersId', (req, res)=>{
      res.send(orders);
    })
  });
-module.exports = router;
+
+ module.exports = router;
