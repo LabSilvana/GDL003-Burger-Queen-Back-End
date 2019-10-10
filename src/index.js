@@ -1,5 +1,6 @@
 const app = require('./app');
 require('./database');
+require ('dotenv').config()
 
 async function init() {
     await app.listen(process.env.PORT || 3000);

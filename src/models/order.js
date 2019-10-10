@@ -1,8 +1,8 @@
 const { Schema, model } = require('mongoose');
 
 const orderSchema = new Schema({
-    product: String,
-    quantity: Number
+    name: String,
+    comanda: [ ]
     
 });
 
