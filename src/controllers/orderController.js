@@ -10,7 +10,7 @@ router.get('/orders', (req, res) => {
     return;
   }
     if(token == process.env.TOKEN_CHEF ){
-  const orders = Order.find((err, orders) => {
+    Order.find((err, orders) => {
     if (err) return console.error(err); 
     res.send(JSON.stringify(orders));
     return;
@@ -30,6 +30,8 @@ router.post('/orders',(req, res) => {
   }
   if(token == process.env.TOKEN_WAITER){
     const { name, comanda } = req.body;
+
+    
     Order.create({ name, comanda },(err, orders) => {
     if (err) return console.log(err);
     res.send('Saved');  
@@ -42,29 +44,34 @@ router.post('/orders',(req, res) => {
   }
  });
 
-router.delete('/orders/:ordersId', (req, res)=>{
-  const token = req.headers["authorization"];
+router.delete('/orders', (req, res)=>{
+const token = req.headers["authorization"];
   if(token == process.env.TOKEN_CHEF){
     res.send("permiso no autorizado")
-    return;
+    return
   }
   if(token == process.env.TOKEN_WAITER){
-    console.log(req.params.ordersId);
-    Order.findOneAndDelete({"id": req.params.ordersId},)
-  .then(orders=> {
-    if(!orders) {
-      return res.status(404).send({
-        message: "Order not found with id " + req.params.ordersId 
-      })
+  const {name} = req.body;  
+  console.log(name);
+  Order.find({name: name},(err, orders) => {
+    if (err){
+    res.send("nombre no encontrado ")
+     return console.error(err); 
     }
-    res.send(note);
-   })
-  }
-  if(token != process.env.TOKEN_WAITER){
+    Order.deleteOne({name: name},(err)=>{
+      if (err){
+      res.send("no se a podido eliminar"); 
+      return console.error(err); 
+      }
+      res.send("delete")
+    })
+    })
+  } 
+if(token != process.env.TOKEN_WAITER){
     res.send("token incorrecto");
   return;
-  }
-  })
+}
+  });
 
  router.put('/orders/:ordersId', (req, res)=>{
    Order.findByIdAndUpdate(req.params.ordersId,{
@@ -78,6 +85,7 @@ router.delete('/orders/:ordersId', (req, res)=>{
       });
      }
      res.send(orders);
-   })
- });
+   });
+ })
+
 module.exports = router;
