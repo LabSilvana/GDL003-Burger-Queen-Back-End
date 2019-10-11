@@ -30,7 +30,7 @@ router.post('/orders',(req, res) => {
   }
   if(token == process.env.TOKEN_WAITER){
     const { name, comanda } = req.body;
-
+    if(typeof name != 'string' || typeof comanda != 'object' || typeof status != 'string') return res.status(400).json({success: false, error: 'Bad Request'});
     
     Order.create({ name, comanda },(err, orders) => {
     if (err) return console.log(err);
@@ -73,15 +73,16 @@ if(token != process.env.TOKEN_WAITER){
 }
   });
 
+
  router.put('/orders/:ordersId', (req, res)=>{
    Order.findByIdAndUpdate(req.params.ordersId,{
-    product: req.body.product,
-    quantity: req.body.quantity
+    name: req.body.name,
+    comanda: req.body.comanda
    },{new:true})
    .then (orders=>{
      if(!orders){
       return res.status(404).send({
-        message: "Note not found with id " + req.params.noteId
+        message: "Product not found with id " + req.params.ordersId
       });
      }
      res.send(orders);
@@ -89,3 +90,4 @@ if(token != process.env.TOKEN_WAITER){
  })
 
 module.exports = router;
+
