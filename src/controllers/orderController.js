@@ -29,9 +29,10 @@ router.post('/orders',(req, res) => {
     return;
   }
   if(token == process.env.TOKEN_WAITER){
-    const { name, comanda } = req.body;
-    if(typeof name != 'string' || typeof comanda != 'object' || typeof status != 'string') return res.status(400).json({success: false, error: 'Bad Request'});
+    const { name, comanda, status } = req.body;
+    console.log(typeof name, typeof comanda, typeof status);
     
+    if(typeof name != 'string' || typeof comanda != 'object' || typeof status != 'string') return res.status(400).json({success: false, error: 'Bad Request'});
     Order.create({ name, comanda },(err, orders) => {
     if (err) return console.log(err);
     res.send('Saved');  
