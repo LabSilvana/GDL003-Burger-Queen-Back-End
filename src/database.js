@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+require ('dotenv').config()
 
 
-mongoose.connect('mongodb+srv://churro-latte:1qa2ws3ed@cluster0-ardbn.mongodb.net/churro_latte?retryWrites=true&w=majority', {
+mongoose.connect(process.env.CHURRO_LATE, {
     useNewUrlParser: true,
     useUnifiedTopology: true  
 }).then(db => console.log('Database is connected'))

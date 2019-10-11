@@ -37,7 +37,7 @@ router.put('/products/:productId',(req, res) => {
     .then(product => {
         if(!product) {
             return res.status(404).send({
-                message: "Note not found with id " + req.params.productId
+                message: "Product not found with id " + req.params.productId
             });
         }
         res.send(product);
