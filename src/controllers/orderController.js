@@ -11,9 +11,9 @@ router.get('/orders', (req, res) => {
 });
 
 router.post('/orders', (req, res) => {
-  const { name, comanda } = req.body;
-  if(typeof name != 'string' || typeof comanda != 'object') return res.status(400).json({success: false, error: 'Bad Request'});
-  Order.create({ name, comanda },(err, order) => {
+  const { name, comanda, status } = req.body;
+  if(typeof name != 'string' || typeof comanda != 'object' || typeof status != 'string') return res.status(400).json({success: false, error: 'Bad Request'});
+  Order.create({ name, comanda, status },(err, order) => {
     if (err) return console.log(err);
     res.send('Saved');
   });
@@ -27,7 +27,7 @@ router.delete('/orders/:ordersId', (req, res)=>{
         message: "Order not found with id " + req.params.ordersId 
       })
     }
-    res.send(note);
+    res.send(orders);
    })
   })
 
@@ -39,7 +39,7 @@ router.delete('/orders/:ordersId', (req, res)=>{
    .then (orders=>{
      if(!orders){
       return res.status(404).send({
-        message: "Note not found with id " + req.params.noteId
+        message: "Product not found with id " + req.params.ordersId
       });
      }
      res.send(orders);
