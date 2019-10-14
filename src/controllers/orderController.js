@@ -23,12 +23,8 @@ router.get('/orders', (req, res) => {
 });
 
 router.post('/orders',(req, res) => {
-  const token = req.headers["authorization"]
-  if(token == process.env.TOKEN_CHEF){
-    res.send("no authorized")
-    return;
-  }
-  if(token == process.env.TOKEN_WAITER){
+  
+ 
     const { name, comanda, status } = req.body;
     if(typeof name != 'string' || typeof comanda != 'object' || typeof status != 'string') return res.status(400).json({success: false, error: 'Bad Request'});
     Order.create({ name, comanda },(err, orders) => {
@@ -36,11 +32,7 @@ router.post('/orders',(req, res) => {
     res.send('Saved');  
     return;
    });
-  }
-  if(token != process.env.TOKEN_WAITER){
-    res.send("incorrect token");
-  return;
-  }
+  
  });
 
 router.delete('/orders', (req, res)=>{
